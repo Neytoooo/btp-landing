@@ -1,0 +1,10 @@
+﻿@import "tailwindcss";
+
+:root {
+  --bg-start: #0a0f1a;
+  --bg-end: #0d1625;
+}
+
+body {
+  @apply antialiased text-slate-100 bg-gradient-to-b from-[var(--bg-start)] to-[var(--bg-end)];
+}
