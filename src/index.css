@@ -8,3 +8,7 @@
 body {
   @apply antialiased text-slate-100 bg-gradient-to-b from-[var(--bg-start)] to-[var(--bg-end)];
 }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}

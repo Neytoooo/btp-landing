@@ -1,6 +1,6 @@
 ﻿import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { HardHat, ClipboardList, CalendarCheck2, FileSpreadsheet, Layers3, ShieldCheck, ArrowRight, CheckCircle2, Hammer, Building2, Smartphone, Github, Mail } from "lucide-react";
+import { HardHat, ClipboardList, CalendarCheck2, FileSpreadsheet, Layers3, ShieldCheck, ArrowRight, CheckCircle2, Hammer, Building2, Smartphone, Github, Mail, Camera, ClipboardCheck, Bell, Users2, Ruler } from "lucide-react";
 
 function GlassCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
@@ -46,8 +46,8 @@ function Hero() {
             La gestion de chantier, <span className="text-sky-300">plus claire</span> que jamais
           </motion.h1>
           <p className="mt-5 max-w-xl text-slate-300">
-            Une application moderne pour piloter vos chantiers : planifier, suivre les tâches, gérer le budget et les
-            documents  optimisée pour le terrain et les faibles réseaux.
+            BTP App est une application web et mobile conçue pour les professionnels du bâtiment, et plus particulièrement pour les métreurs, conducteurs de travaux et bureaux d’études.
+Elle centralise tout le cycle d’un projet, du plan au chiffrage, puis du suivi de chantier à la facturation, dans une interface moderne, rapide et intuitive.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -106,41 +106,109 @@ function LogosBar() {
 }
 
 function Features() {
-  const data = [
-    { icon: <HardHat className="h-5 w-5" />, title: "Chantiers", desc: "Vue globale, statuts, responsables et progrès %." },
-    { icon: <ClipboardList className="h-5 w-5" />, title: "Tâches & lots", desc: "Kanban, priorités, checklists et pièces jointes." },
-    { icon: <CalendarCheck2 className="h-5 w-5" />, title: "Planning", desc: "Jalons, dépendances simples, vue Gantt légère." },
-    { icon: <FileSpreadsheet className="h-5 w-5" />, title: "Budget", desc: "Prévu vs engagé, alertes de dépassement." },
-    { icon: <Layers3 className="h-5 w-5" />, title: "Documents", desc: "Plans, DOE, versions et tags métier." },
-    { icon: <ShieldCheck className="h-5 w-5" />, title: "Qualité & Sécurité", desc: "NC, incidents, actions, SLA visibles." },
-  ];
+  const webFeatures = [
+    {
+      icon: <Layers3 className="h-5 w-5" />,
+      title: "Projets & Plans",
+      desc: "Création de projets, import de plans (PDF, DWG, images) et définition d’échelles précises.",
+    },
+    {
+      icon: <Ruler className="h-5 w-5" />,
+      title: "Mesures & Annotation",
+      desc: "Mesurez directement sur le plan, annotez, dessinez et comparez différentes versions.",
+    },
+    {
+      icon: <FileSpreadsheet className="h-5 w-5" />,
+      title: "Chiffrage & Devis",
+      desc: "Chiffrage automatique avec base d’ouvrages, calculs de coûts, marges et exports PDF/Excel.",
+    },
+    {
+      icon: <CalendarCheck2 className="h-5 w-5" />,
+      title: "Suivi de chantier",
+      desc: "Graphiques Gantt, % d’avancement, alertes budget et rapports automatiques.",
+    },
+    {
+      icon: <Users2 className="h-5 w-5" />,
+      title: "Utilisateurs & Rôles",
+      desc: "Accès par profil, validations, journal d’activité et notifications en temps réel.",
+    },
+  ]
+
+  const mobileFeatures = [
+    {
+      icon: <Smartphone className="h-5 w-5" />,
+      title: "Accès hors-ligne",
+      desc: "Consultez vos projets et plans sans connexion, synchronisation automatique au retour réseau.",
+    },
+    {
+      icon: <Camera className="h-5 w-5" />,
+      title: "Mesures terrain",
+      desc: "Mesurez via photo ou réalité augmentée, ajoutez commentaires et marquages.",
+    },
+    {
+      icon: <HardHat className="h-5 w-5" />,
+      title: "Signalement & Anomalies",
+      desc: "Signalez les défauts avec photo et description, suivi du statut (ouvert/en cours/résolu).",
+    },
+    {
+      icon: <ClipboardCheck className="h-5 w-5" />,
+      title: "Avancement chantier",
+      desc: "Saisissez le % d’avancement par zone et comparez avec le métré théorique.",
+    },
+    {
+      icon: <Bell className="h-5 w-5" />,
+      title: "Notifications push",
+      desc: "Alertes en temps réel pour validations, anomalies ou rappels de saisie.",
+    },
+  ]
 
   return (
-    <section id="features" className="py-10 sm:py-16">
-      <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-2xl font-semibold">
-        Fonctionnalités clés
-      </motion.h2>
+    <section id="features" className="py-16">
+      <h2 className="text-2xl font-semibold text-center">Fonctionnalités clés</h2>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {data.map((f, i) => (
-          <motion.div key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}>
+      {/* -------- CÔTÉ BUREAU -------- */}
+      <h3 className="mt-10 text-xl font-semibold text-sky-300 text-center">💻 Côté Bureau</h3>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        {webFeatures.map((f, i) => (
+          <div key={i} >
             <GlassCard>
               <div className="flex items-start gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10 text-sky-200">
                   {f.icon}
                 </div>
                 <div>
-                  <h3 className="font-medium">{f.title}</h3>
+                  <h4 className="font-medium">{f.title}</h4>
                   <p className="mt-1 text-sm text-slate-300">{f.desc}</p>
                 </div>
               </div>
             </GlassCard>
-          </motion.div>
+          </div>
+        ))}
+      </div>
+
+      {/* -------- CÔTÉ TERRAIN -------- */}
+      <h3 className="mt-16 text-xl font-semibold text-sky-300 text-center">📱 Côté Terrain</h3>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        {mobileFeatures.map((f, i) => (
+          <div key={i} >
+            <GlassCard>
+              <div className="flex items-start gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10 text-sky-200">
+                  {f.icon}
+                </div>
+                <div>
+                  <h4 className="font-medium">{f.title}</h4>
+                  <p className="mt-1 text-sm text-slate-300">{f.desc}</p>
+                </div>
+              </div>
+            </GlassCard>
+          </div>
         ))}
       </div>
     </section>
-  );
+  )
 }
+
 
 function Showcase() {
   return (
