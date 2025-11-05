@@ -1,5 +1,5 @@
 ﻿import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion"
 import { HardHat, ClipboardList, CalendarCheck2, FileSpreadsheet, Layers3, ShieldCheck, ArrowRight, CheckCircle2, Hammer, Building2, Smartphone, Github, Mail, Camera, ClipboardCheck, Bell, Users2, Ruler } from "lucide-react";
 
 function GlassCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -106,71 +106,79 @@ function LogosBar() {
 }
 
 function Features() {
+  const reduce = useReducedMotion();
+
+  // Variantes d'animation
+  const heading = {
+    hidden: { opacity: 0, y: 12, filter: "blur(6px)" },
+    show: {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      transition: reduce ? { duration: 0 } : { duration: 0.45, ease: "easeOut" }
+    }
+  };
+  const container = (delay = 0) => ({
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: reduce ? { duration: 0 } : { delay, staggerChildren: 0.08, delayChildren: 0.06 }
+    }
+  });
+  const item = {
+    hidden: { opacity: 0, y: 18, filter: "blur(8px)" },
+    show: {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      transition: reduce ? { duration: 0 } : { type: "spring", stiffness: 90, damping: 16, mass: 0.5 }
+    }
+  };
+
   const webFeatures = [
-    {
-      icon: <Layers3 className="h-5 w-5" />,
-      title: "Projets & Plans",
-      desc: "Création de projets, import de plans (PDF, DWG, images) et définition d’échelles précises.",
-    },
-    {
-      icon: <Ruler className="h-5 w-5" />,
-      title: "Mesures & Annotation",
-      desc: "Mesurez directement sur le plan, annotez, dessinez et comparez différentes versions.",
-    },
-    {
-      icon: <FileSpreadsheet className="h-5 w-5" />,
-      title: "Chiffrage & Devis",
-      desc: "Chiffrage automatique avec base d’ouvrages, calculs de coûts, marges et exports PDF/Excel.",
-    },
-    {
-      icon: <CalendarCheck2 className="h-5 w-5" />,
-      title: "Suivi de chantier",
-      desc: "Graphiques Gantt, % d’avancement, alertes budget et rapports automatiques.",
-    },
-    {
-      icon: <Users2 className="h-5 w-5" />,
-      title: "Utilisateurs & Rôles",
-      desc: "Accès par profil, validations, journal d’activité et notifications en temps réel.",
-    },
-  ]
+    { icon: <Layers3 className="h-5 w-5" />, title: "Projets & Plans", desc: "Création de projets, import de plans (PDF, DWG, images) et définition d’échelles précises." },
+    { icon: <Ruler className="h-5 w-5" />, title: "Mesures & Annotation", desc: "Mesurez directement sur le plan, annotez, dessinez et comparez différentes versions." },
+    { icon: <FileSpreadsheet className="h-5 w-5" />, title: "Chiffrage & Devis", desc: "Chiffrage automatique avec base d’ouvrages, calculs de coûts, marges et exports PDF/Excel." },
+    { icon: <CalendarCheck2 className="h-5 w-5" />, title: "Suivi de chantier", desc: "Graphiques Gantt, % d’avancement, alertes budget et rapports automatiques." },
+    { icon: <Users2 className="h-5 w-5" />, title: "Utilisateurs & Rôles", desc: "Accès par profil, validations, journal d’activité et notifications en temps réel." },
+  ];
 
   const mobileFeatures = [
-    {
-      icon: <Smartphone className="h-5 w-5" />,
-      title: "Accès hors-ligne",
-      desc: "Consultez vos projets et plans sans connexion, synchronisation automatique au retour réseau.",
-    },
-    {
-      icon: <Camera className="h-5 w-5" />,
-      title: "Mesures terrain",
-      desc: "Mesurez via photo ou réalité augmentée, ajoutez commentaires et marquages.",
-    },
-    {
-      icon: <HardHat className="h-5 w-5" />,
-      title: "Signalement & Anomalies",
-      desc: "Signalez les défauts avec photo et description, suivi du statut (ouvert/en cours/résolu).",
-    },
-    {
-      icon: <ClipboardCheck className="h-5 w-5" />,
-      title: "Avancement chantier",
-      desc: "Saisissez le % d’avancement par zone et comparez avec le métré théorique.",
-    },
-    {
-      icon: <Bell className="h-5 w-5" />,
-      title: "Notifications push",
-      desc: "Alertes en temps réel pour validations, anomalies ou rappels de saisie.",
-    },
-  ]
+    { icon: <Smartphone className="h-5 w-5" />, title: "Accès hors-ligne", desc: "Consultez vos projets et plans sans connexion, synchronisation automatique au retour réseau." },
+    { icon: <Camera className="h-5 w-5" />, title: "Mesures terrain", desc: "Mesurez via photo ou réalité augmentée, ajoutez commentaires et marquages." },
+    { icon: <HardHat className="h-5 w-5" />, title: "Signalement & Anomalies", desc: "Signalez les défauts avec photo et description, suivi du statut (ouvert/en cours/résolu)." },
+    { icon: <ClipboardCheck className="h-5 w-5" />, title: "Avancement chantier", desc: "Saisissez le % d’avancement par zone et comparez avec le métré théorique." },
+    { icon: <Bell className="h-5 w-5" />, title: "Notifications push", desc: "Alertes en temps réel pour validations, anomalies ou rappels de saisie." },
+  ];
 
   return (
     <section id="features" className="py-16">
-      <h2 className="text-2xl font-semibold text-center">Fonctionnalités clés</h2>
+      <motion.h2
+        variants={heading}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-10% 0px" }}
+        className="text-2xl font-semibold text-center"
+      >
+        Fonctionnalités clés
+      </motion.h2>
 
       {/* -------- CÔTÉ BUREAU -------- */}
-      <h3 className="mt-10 text-xl font-semibold text-sky-300 text-center">💻 Côté Bureau</h3>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+      <motion.h3
+        variants={heading}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-10% 0px" }}
+        className="mt-10 text-xl font-semibold text-sky-300 text-center"
+      >
+        💻 Côté Bureau
+      </motion.h3>
+
+      <motion.div
+        variants={container(0.05)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-10% 0px" }}
+        className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
+      >
         {webFeatures.map((f, i) => (
-          <div key={i} >
+          <motion.div key={i} variants={item}>
             <GlassCard>
               <div className="flex items-start gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10 text-sky-200">
@@ -182,15 +190,30 @@ function Features() {
                 </div>
               </div>
             </GlassCard>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* -------- CÔTÉ TERRAIN -------- */}
-      <h3 className="mt-16 text-xl font-semibold text-sky-300 text-center">📱 Côté Terrain</h3>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+      <motion.h3
+        variants={heading}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-10% 0px" }}
+        className="mt-16 text-xl font-semibold text-sky-300 text-center"
+      >
+        📱 Côté Terrain
+      </motion.h3>
+
+      <motion.div
+        variants={container(0.05)}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-10% 0px" }}
+        className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
+      >
         {mobileFeatures.map((f, i) => (
-          <div key={i} >
+          <motion.div key={i} variants={item}>
             <GlassCard>
               <div className="flex items-start gap-3">
                 <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/15 bg-white/10 text-sky-200">
@@ -202,12 +225,13 @@ function Features() {
                 </div>
               </div>
             </GlassCard>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
-  )
+  );
 }
+
 
 
 function Showcase() {
